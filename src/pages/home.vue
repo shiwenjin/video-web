@@ -36,7 +36,9 @@ let videos = ref<Record[]>();
 // 获取数据
 const getPages = async () => {
   let result = await getInfo();
-  videos.value = result.data?.records;
+  if (result) {
+    videos.value = result.data?.records;
+  }
 };
 
 const play = (video: Record) => {
@@ -48,38 +50,53 @@ getPages();
 <template>
   <div id="home-body">
     <el-affix class="header">
-      <el-menu :default-active="activeIndex" :ellipsis="false" class="el-menu-demo" mode="horizontal"
-               @select="handleSelect">
+      <el-menu
+        :default-active="activeIndex"
+        :ellipsis="false"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+      >
         <el-menu-item index="0">学习强国</el-menu-item>
         <el-menu-item index="1">听党指挥</el-menu-item>
         <el-menu-item index="2">能打胜仗</el-menu-item>
       </el-menu>
     </el-affix>
 
-    <vue3-easy-swiper :list="list" style="width: 1000px; height: 450px; margin: auto">
+    <vue3-easy-swiper
+      :list="list"
+      style="width: 1000px; height: 450px; margin: auto"
+    >
       <template #swiperItem="{ item }">
-        <img :src="item.url" alt="" style="width: 100%; height: 100%"/>
+        <img :src="item.url" alt="" style="width: 100%; height: 100%" />
       </template>
     </vue3-easy-swiper>
 
     <el-row :gutter="20" style="margin-top: 20px; margin-bottom: 20px">
-      <el-col v-for="video in videos" :key="video.id" :span="6" style="margin-top: 20px">
+      <el-col
+        v-for="video in videos"
+        :key="video.id"
+        :span="6"
+        style="margin-top: 20px"
+      >
         <el-card :body-style="{ padding: '0px' }">
-          <img :src="'api/static' + video.coverPath" class="image"/>
+          <img :src="'api/static' + video.coverPath" class="image" />
           <span class="js_start_play" @click="play(video)"></span>
 
           <div style="padding: 14px">
             <span>{{ video.title }}</span>
             <div class="bottom">
               <time class="time">{{ video.createdAt }}</time>
-              <el-button class="button" text @click="play(video)">播放</el-button>
+              <el-button class="button" text @click="play(video)"
+                >播放</el-button
+              >
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-backtop :bottom="100" :right="100"/>
+    <el-backtop :bottom="100" :right="100" />
   </div>
 </template>
 

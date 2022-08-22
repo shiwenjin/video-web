@@ -8,7 +8,9 @@
  *
  * Copyright (c) 2022 by yangking yangkingg@163.com, All Rights Reserved.
 -->
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import crudVue from "../components/crud.vue"
+</script>
 
 <template>
   <crudVue/>
